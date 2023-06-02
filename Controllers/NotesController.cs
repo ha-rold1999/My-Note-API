@@ -56,5 +56,29 @@ namespace My_Note_API.Controllers
                 return BadRequest(ResponseHandler.GetExceptionMessage(ex));
             }
         }
+
+        [HttpDelete]
+        [Route("api/[controller]/DeleteNote/{id}")]
+        public IActionResult DeleteNote(int id) 
+        {
+            try
+            {
+                ResponseEnum type = ResponseEnum.Success;
+                Note? note = dbHelper.DeleteNote(id);
+                if (note != null)
+                {
+                    return Ok(ResponseHandler.GetResult(type, note));
+                }
+                else
+                {
+                    type = ResponseEnum.NotFound;
+                    return BadRequest(ResponseHandler.GetResult(type, null));
+                }
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ResponseHandler.GetExceptionMessage(ex));
+            }
+        }
     }
 }

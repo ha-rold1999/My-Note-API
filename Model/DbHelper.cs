@@ -47,5 +47,17 @@ namespace My_Note_API.Model
             return null;
         }
 
+        public Note? DeleteNote(int id) 
+        {
+            Note? note = _databaseContext.Notes.Where(data => data.Id == id).FirstOrDefault();
+            if (note != null)
+            {
+                _databaseContext.Notes.Remove(note);
+                _databaseContext.SaveChanges();
+            }
+
+            return note;
+        }
+
     }
 }
