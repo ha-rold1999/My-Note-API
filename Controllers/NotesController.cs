@@ -57,6 +57,30 @@ namespace My_Note_API.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("api/[controller]/UpdateNote")]
+        public IActionResult UpdateNote([FromBody]Note note) 
+        {
+            try
+            {
+                ResponseEnum type = ResponseEnum.Success;
+                Note? n = dbHelper.AddNote(note);
+                if (n != null)
+                {
+                    return Ok(ResponseHandler.GetResult(type, n));
+                }
+                else
+                {
+                    type = ResponseEnum.NotFound;
+                    return BadRequest(ResponseHandler.GetResult(type, null));
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ResponseHandler.GetExceptionMessage(ex));
+            }
+        }
+
         [HttpDelete]
         [Route("api/[controller]/DeleteNote/{id}")]
         public IActionResult DeleteNote(int id) 
