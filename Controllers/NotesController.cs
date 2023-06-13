@@ -7,10 +7,10 @@ namespace My_Note_API.Controllers
 {
     public class NotesController : Controller
     {
-        private readonly DbHelper dbHelper;
+        private readonly IDbHelper _idbHelper;
         public NotesController(DatabaseContext context)
         {
-            dbHelper = new DbHelper(context);
+            _idbHelper = new DbHelper(context);
         }
 
         [HttpGet]
@@ -20,7 +20,7 @@ namespace My_Note_API.Controllers
             ResponseEnum type = ResponseEnum.Success;
             try 
             {
-                IEnumerable<Note> notes = dbHelper.GetAllNote();
+                IEnumerable<Note> notes = _idbHelper.GetAllNote();
                 if(!notes.Any()) 
                 {
                     type = ResponseEnum.NotFound;
@@ -40,7 +40,7 @@ namespace My_Note_API.Controllers
             try
             {
                 ResponseEnum type = ResponseEnum.Success;
-                Note? n = dbHelper.AddNote(note);
+                Note? n = _idbHelper.AddNote(note);
                 if(n != null) 
                 {
                     return Ok(ResponseHandler.GetResult(type, n));
@@ -64,7 +64,7 @@ namespace My_Note_API.Controllers
             try
             {
                 ResponseEnum type = ResponseEnum.Success;
-                Note? n = dbHelper.AddNote(note);
+                Note? n = _idbHelper.AddNote(note);
                 if (n != null)
                 {
                     return Ok(ResponseHandler.GetResult(type, n));
@@ -88,7 +88,7 @@ namespace My_Note_API.Controllers
             try
             {
                 ResponseEnum type = ResponseEnum.Success;
-                Note? note = dbHelper.DeleteNote(id);
+                Note? note = _idbHelper.DeleteNote(id);
                 if (note != null)
                 {
                     return Ok(ResponseHandler.GetResult(type, note));
