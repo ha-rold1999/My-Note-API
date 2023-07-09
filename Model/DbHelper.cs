@@ -17,6 +17,12 @@ namespace My_Note_API.Model
             return notes;        
         }
 
+        public List<Code> GetAllCode() 
+        {
+            var codes = _databaseContext.Codes.ToList();
+            return codes;
+        }
+
         public Note? AddNote(Note note) 
         {
             if (note != null)
@@ -47,6 +53,36 @@ namespace My_Note_API.Model
             return null;
         }
 
+        public Code? AddCode(Code code)
+        {
+            if (code != null)
+            {
+                Code? n = new Code();
+                n = _databaseContext.Codes.Where(data => data.Id == code.Id).FirstOrDefault();
+                if (n != null)
+                {
+                    n.Name = code.Name;
+                    n.Description = code.Description;
+                    n.codes = code.codes;
+                    n.url = code.url;
+                }
+                else
+                {
+                    n = new Code()
+                    {
+                        Name = code.Name,
+                        Description = code.Description,
+                        codes = code.codes,
+                        url = code.url
+                    };
+                    _databaseContext.Codes.Add(n);
+                }
+                _databaseContext.SaveChanges();
+                return n;
+            }
+            return null;
+        }
+
         public Note? DeleteNote(int id) 
         {
             Note? note = _databaseContext.Notes.Where(data => data.Id == id).FirstOrDefault();
@@ -57,6 +93,17 @@ namespace My_Note_API.Model
             }
 
             return note;
+        }
+        public Code? DeleteCode(int id)
+        {
+            Code? code = _databaseContext.Codes.Where(data => data.Id == id).FirstOrDefault();
+            if (code != null)
+            {
+                _databaseContext.Codes.Remove(code);
+                _databaseContext.SaveChanges();
+            }
+
+            return code;
         }
 
     }

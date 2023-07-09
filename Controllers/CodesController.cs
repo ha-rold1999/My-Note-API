@@ -5,43 +5,44 @@ using My_Note_API.Response;
 
 namespace My_Note_API.Controllers
 {
-    public class NotesController : Controller
+    public class CodesController : Controller
     {
-        private readonly DbHelper _idbHelper;
-        public NotesController(DatabaseContext context)
+        private readonly DbHelper _dbHelper;
+
+        public CodesController(DatabaseContext context)
         {
-            _idbHelper = new DbHelper(context);
+                _dbHelper = new DbHelper(context); 
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetAllNotes")]
-        public IActionResult GetAllNotes()
+        [Route("api/[controller]/GetAllCodes")]
+        public IActionResult GetAllCodes() 
         {
             ResponseEnum type = ResponseEnum.Success;
-            try 
+            try
             {
-                IEnumerable<Note> notes = _idbHelper.GetAllNote();
-                if(!notes.Any()) 
+                IEnumerable<Code> codes = _dbHelper.GetAllCode();
+                if (!codes.Any())
                 {
                     type = ResponseEnum.NotFound;
                 }
-                return Ok(ResponseHandler.GetResult(type, notes));
+                return Ok(ResponseHandler.GetResult(type, codes));
             }
-            catch (Exception ex) 
-            {
-                return BadRequest(ResponseHandler.GetExceptionMessage(ex)); 
+            catch (Exception ex)
+            { 
+                return BadRequest(ResponseHandler.GetExceptionMessage(ex));
             }
         }
 
         [HttpPost]
-        [Route("api/[controller]/AddNote")]
-        public IActionResult AddNote([FromBody]Note note) 
+        [Route("api/[controller]/AddCode")]
+        public IActionResult AddCode([FromBody]Code code)
         {
             try
             {
                 ResponseEnum type = ResponseEnum.Success;
-                Note? n = _idbHelper.AddNote(note);
-                if(n != null) 
+                Code? n = _dbHelper.AddCode(code);
+                if (n != null)
                 {
                     return Ok(ResponseHandler.GetResult(type, n));
                 }
@@ -51,20 +52,20 @@ namespace My_Note_API.Controllers
                     return BadRequest(ResponseHandler.GetResult(type, null));
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return BadRequest(ResponseHandler.GetExceptionMessage(ex));
             }
         }
 
         [HttpPut]
-        [Route("api/[controller]/UpdateNote")]
-        public IActionResult UpdateNote([FromBody]Note note) 
+        [Route("api/[controller]/UpdateCode")]
+        public IActionResult UpdateCode([FromBody]Code code)
         {
             try
             {
                 ResponseEnum type = ResponseEnum.Success;
-                Note? n = _idbHelper.AddNote(note);
+                Code n = _dbHelper.AddCode(code);
                 if (n != null)
                 {
                     return Ok(ResponseHandler.GetResult(type, n));
@@ -82,13 +83,13 @@ namespace My_Note_API.Controllers
         }
 
         [HttpDelete]
-        [Route("api/[controller]/DeleteNote/{id}")]
-        public IActionResult DeleteNote(int id) 
+        [Route("api/[controller]/DeleteCode/{id}")]
+        public IActionResult DeleteCode(int id)
         {
             try
             {
                 ResponseEnum type = ResponseEnum.Success;
-                Note? note = _idbHelper.DeleteNote(id);
+                Code? note = _dbHelper.DeleteCode(id);
                 if (note != null)
                 {
                     return Ok(ResponseHandler.GetResult(type, note));
@@ -99,7 +100,7 @@ namespace My_Note_API.Controllers
                     return BadRequest(ResponseHandler.GetResult(type, null));
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return BadRequest(ResponseHandler.GetExceptionMessage(ex));
             }
