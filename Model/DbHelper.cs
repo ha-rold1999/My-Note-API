@@ -61,7 +61,7 @@ namespace My_Note_API.Model
                 n = _databaseContext.Codes.Where(data => data.Id == code.Id).FirstOrDefault();
                 if (n != null)
                 {
-                    n.Name = code.Name;
+                    n.Title = code.Title;
                     n.Description = code.Description;
                     n.codes = code.codes;
                     n.url = code.url;
@@ -70,7 +70,7 @@ namespace My_Note_API.Model
                 {
                     n = new Code()
                     {
-                        Name = code.Name,
+                        Title = code.Title,
                         Description = code.Description,
                         codes = code.codes,
                         url = code.url
