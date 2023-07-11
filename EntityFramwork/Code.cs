@@ -14,7 +14,7 @@ namespace My_Note_API.EntityFramwork
         [Required]
         public string Description { get; set; }
         [Required]
-        public string[] codes { get; set; }
+        public string[] items { get; set; }
         [Required]
         public string url { get; set; }
     }

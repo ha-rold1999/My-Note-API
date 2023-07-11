@@ -33,7 +33,7 @@ namespace My_Note_API.Model
                 {
                     n.Title = note.Title;
                     n.Description = note.Description;
-                    n.steps = note.steps;
+                    n.items = note.items;
                     n.url = note.url;
                 }
                 else
@@ -42,7 +42,7 @@ namespace My_Note_API.Model
                     {
                         Title = note.Title,
                         Description = note.Description,
-                        steps = note.steps,
+                        items = note.items,
                         url = note.url
                     };
                     _databaseContext.Notes.Add(n);
@@ -63,7 +63,7 @@ namespace My_Note_API.Model
                 {
                     n.Title = code.Title;
                     n.Description = code.Description;
-                    n.codes = code.codes;
+                    n.items = code.items;
                     n.url = code.url;
                 }
                 else
@@ -72,7 +72,7 @@ namespace My_Note_API.Model
                     {
                         Title = code.Title,
                         Description = code.Description,
-                        codes = code.codes,
+                        items = code.items,
                         url = code.url
                     };
                     _databaseContext.Codes.Add(n);
