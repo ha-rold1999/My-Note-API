@@ -1,34 +1,31 @@
-﻿using My_Note_API.Controllers;
+﻿using Microsoft.EntityFrameworkCore;
+using My_Note_API.Controllers;
 using My_Note_API.EntityFramwork;
 
 namespace My_Note_API.Model
 {
-    public class DbHelper
+    public class DbHelper<T> where T : class, INote, new()
     {
         private DatabaseContext _databaseContext;
+        private readonly DbSet<T> _dbSet;
         public DbHelper(DatabaseContext databaseContext) 
         { 
             _databaseContext = databaseContext; 
+            _dbSet = _databaseContext.Set<T>();
         }
 
-        public List<Note> GetAllNote() 
+        public List<T> GetAllNote()
         {
-            var notes = _databaseContext.Notes.ToList();
-            return notes;        
+            var notes = _dbSet.ToList();
+            return notes;
         }
 
-        public List<Code> GetAllCode() 
-        {
-            var codes = _databaseContext.Codes.ToList();
-            return codes;
-        }
-
-        public Note? AddNote(Note note) 
+        public T? AddNote(T note) 
         {
             if (note != null)
             {
-                Note? n = new Note();
-                n = _databaseContext.Notes.Where(data => data.Id==note.Id).FirstOrDefault();
+                T? n = new T();
+                n = _dbSet.Find(note.Id);
                 if (n != null)
                 {
                     n.Title = note.Title;
@@ -38,14 +35,14 @@ namespace My_Note_API.Model
                 }
                 else
                 {
-                    n = new Note()
+                    n = new T()
                     {
                         Title = note.Title,
                         Description = note.Description,
                         items = note.items,
                         url = note.url
                     };
-                    _databaseContext.Notes.Add(n);
+                    _dbSet.Add(n);
                 }
                 _databaseContext.SaveChanges();
                 return n;
@@ -53,57 +50,16 @@ namespace My_Note_API.Model
             return null;
         }
 
-        public Code? AddCode(Code code)
+        public T? DeleteNote(int id) 
         {
-            if (code != null)
-            {
-                Code? n = new Code();
-                n = _databaseContext.Codes.Where(data => data.Id == code.Id).FirstOrDefault();
-                if (n != null)
-                {
-                    n.Title = code.Title;
-                    n.Description = code.Description;
-                    n.items = code.items;
-                    n.url = code.url;
-                }
-                else
-                {
-                    n = new Code()
-                    {
-                        Title = code.Title,
-                        Description = code.Description,
-                        items = code.items,
-                        url = code.url
-                    };
-                    _databaseContext.Codes.Add(n);
-                }
-                _databaseContext.SaveChanges();
-                return n;
-            }
-            return null;
-        }
-
-        public Note? DeleteNote(int id) 
-        {
-            Note? note = _databaseContext.Notes.Where(data => data.Id == id).FirstOrDefault();
+            T? note = _dbSet.Find(id);
             if (note != null)
             {
-                _databaseContext.Notes.Remove(note);
+                _dbSet.Remove(note);
                 _databaseContext.SaveChanges();
             }
 
             return note;
-        }
-        public Code? DeleteCode(int id)
-        {
-            Code? code = _databaseContext.Codes.Where(data => data.Id == id).FirstOrDefault();
-            if (code != null)
-            {
-                _databaseContext.Codes.Remove(code);
-                _databaseContext.SaveChanges();
-            }
-
-            return code;
         }
 
     }

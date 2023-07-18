@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace My_Note_API.EntityFramwork
 {
     [Table("Code")]
-    public class Code
+    public class Code : INote
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -7,11 +7,11 @@ namespace My_Note_API.Controllers
 {
     public class CodesController : Controller
     {
-        private readonly DbHelper _dbHelper;
+        private readonly DbHelper<Code> _dbHelper;
 
         public CodesController(DatabaseContext context)
         {
-                _dbHelper = new DbHelper(context); 
+                _dbHelper = new DbHelper<Code>(context); 
         }
 
         [HttpGet]
@@ -21,7 +21,7 @@ namespace My_Note_API.Controllers
             ResponseEnum type = ResponseEnum.Success;
             try
             {
-                IEnumerable<Code> codes = _dbHelper.GetAllCode();
+                IEnumerable<Code> codes = _dbHelper.GetAllNote();
                 if (!codes.Any())
                 {
                     type = ResponseEnum.NotFound;
@@ -41,7 +41,7 @@ namespace My_Note_API.Controllers
             try
             {
                 ResponseEnum type = ResponseEnum.Success;
-                Code? n = _dbHelper.AddCode(code);
+                Code? n = _dbHelper.AddNote(code);
                 if (n != null)
                 {
                     return Ok(ResponseHandler.GetResult(type, n));
@@ -65,7 +65,7 @@ namespace My_Note_API.Controllers
             try
             {
                 ResponseEnum type = ResponseEnum.Success;
-                Code n = _dbHelper.AddCode(code);
+                Code? n = _dbHelper.AddNote(code);
                 if (n != null)
                 {
                     return Ok(ResponseHandler.GetResult(type, n));
@@ -89,7 +89,7 @@ namespace My_Note_API.Controllers
             try
             {
                 ResponseEnum type = ResponseEnum.Success;
-                Code? note = _dbHelper.DeleteCode(id);
+                Code? note = _dbHelper.DeleteNote(id);
                 if (note != null)
                 {
                     return Ok(ResponseHandler.GetResult(type, note));
