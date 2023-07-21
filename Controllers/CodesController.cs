@@ -11,7 +11,9 @@ namespace My_Note_API.Controllers
 
         public CodesController(DatabaseContext context)
         {
-                _dbHelper = new DbHelper<Code>(context); 
+            using (_dbHelper = new DbHelper<Code>(context))
+            { }
+                
         }
 
         [HttpGet]

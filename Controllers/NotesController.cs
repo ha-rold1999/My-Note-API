@@ -10,7 +10,8 @@ namespace My_Note_API.Controllers
         private readonly DbHelper<Note> _idbHelper;
         public NotesController(DatabaseContext context)
         {
-            _idbHelper = new DbHelper<Note>(context);
+            using (_idbHelper = new DbHelper<Note>(context))
+            { }
         }
 
         [HttpGet]
