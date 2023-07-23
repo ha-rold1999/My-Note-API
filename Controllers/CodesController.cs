@@ -5,20 +5,18 @@ using My_Note_API.Response;
 
 namespace My_Note_API.Controllers
 {
-    public class CodesController : Controller
+    public class CodesController : Controller, INotesController<Code>
     {
         private readonly DbHelper<Code> _dbHelper;
 
         public CodesController(DatabaseContext context)
-        {
-            using (_dbHelper = new DbHelper<Code>(context))
-            { }
-                
+        { 
+            _dbHelper = new DbHelper<Code>(context);
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetAllCodes")]
-        public IActionResult GetAllCodes() 
+        [Route("api/[controller]/GetAllNotes")]
+        public IActionResult GetAllNotes() 
         {
             ResponseEnum type = ResponseEnum.Success;
             try
@@ -37,8 +35,8 @@ namespace My_Note_API.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/AddCode")]
-        public IActionResult AddCode([FromBody]Code code)
+        [Route("api/[controller]/AddNote")]
+        public IActionResult AddNote([FromBody]Code code)
         {
             try
             {
@@ -61,8 +59,8 @@ namespace My_Note_API.Controllers
         }
 
         [HttpPut]
-        [Route("api/[controller]/UpdateCode")]
-        public IActionResult UpdateCode([FromBody]Code code)
+        [Route("api/[controller]/UpdateNote")]
+        public IActionResult UpdateNote([FromBody]Code code)
         {
             try
             {
@@ -85,8 +83,8 @@ namespace My_Note_API.Controllers
         }
 
         [HttpDelete]
-        [Route("api/[controller]/DeleteCode/{id}")]
-        public IActionResult DeleteCode(int id)
+        [Route("api/[controller]/DeleteNote/{id}")]
+        public IActionResult DeleteNote(int id)
         {
             try
             {

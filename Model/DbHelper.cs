@@ -4,7 +4,7 @@ using My_Note_API.EntityFramwork;
 
 namespace My_Note_API.Model
 {
-    public class DbHelper<T> :IDisposable where T : class, INote, new()
+    public class DbHelper<T> where T : class, INote, new()
     {
         private DatabaseContext _databaseContext;
         private readonly DbSet<T> _dbSet;
@@ -60,11 +60,6 @@ namespace My_Note_API.Model
             }
 
             return note;
-        }
-
-        public void Dispose()
-        {
-            GC.Collect();
         }
     }
 }

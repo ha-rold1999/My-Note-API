@@ -5,13 +5,12 @@ using My_Note_API.Response;
 
 namespace My_Note_API.Controllers
 {
-    public class NotesController : Controller
+    public class NotesController : Controller, INotesController<Note>
     {
         private readonly DbHelper<Note> _idbHelper;
         public NotesController(DatabaseContext context)
         {
-            using (_idbHelper = new DbHelper<Note>(context))
-            { }
+            _idbHelper = new DbHelper<Note>(context);
         }
 
         [HttpGet]
@@ -19,30 +18,30 @@ namespace My_Note_API.Controllers
         public IActionResult GetAllNotes()
         {
             ResponseEnum type = ResponseEnum.Success;
-            try 
+            try
             {
                 IEnumerable<Note> notes = _idbHelper.GetAllNote();
-                if(!notes.Any()) 
+                if (!notes.Any())
                 {
                     type = ResponseEnum.NotFound;
                 }
                 return Ok(ResponseHandler.GetResult(type, notes));
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                return BadRequest(ResponseHandler.GetExceptionMessage(ex)); 
+                return BadRequest(ResponseHandler.GetExceptionMessage(ex));
             }
         }
 
         [HttpPost]
         [Route("api/[controller]/AddNote")]
-        public IActionResult AddNote([FromBody]Note note) 
+        public IActionResult AddNote([FromBody] Note note)
         {
             try
             {
                 ResponseEnum type = ResponseEnum.Success;
                 Note? n = _idbHelper.AddNote(note);
-                if(n != null) 
+                if (n != null)
                 {
                     return Ok(ResponseHandler.GetResult(type, n));
                 }
@@ -52,7 +51,7 @@ namespace My_Note_API.Controllers
                     return BadRequest(ResponseHandler.GetResult(type, null));
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return BadRequest(ResponseHandler.GetExceptionMessage(ex));
             }
@@ -60,7 +59,7 @@ namespace My_Note_API.Controllers
 
         [HttpPut]
         [Route("api/[controller]/UpdateNote")]
-        public IActionResult UpdateNote([FromBody]Note note) 
+        public IActionResult UpdateNote([FromBody] Note note)
         {
             try
             {
@@ -84,7 +83,7 @@ namespace My_Note_API.Controllers
 
         [HttpDelete]
         [Route("api/[controller]/DeleteNote/{id}")]
-        public IActionResult DeleteNote(int id) 
+        public IActionResult DeleteNote(int id)
         {
             try
             {
@@ -100,7 +99,7 @@ namespace My_Note_API.Controllers
                     return BadRequest(ResponseHandler.GetResult(type, null));
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return BadRequest(ResponseHandler.GetExceptionMessage(ex));
             }

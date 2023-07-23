@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using My_Note_API.Controllers;
 using My_Note_API.EntityFramwork;
 using My_Note_API.Model;
 
@@ -12,6 +13,8 @@ builder.Services.AddDbContext<DatabaseContext>(o => o.UseNpgsql(builder.Configur
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(o => o.AddDefaultPolicy(builder => builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()));
+builder.Services.AddScoped<INotesController<Note>, NotesController>();
+builder.Services.AddScoped<INotesController<Code>, CodesController>();
 
 var app = builder.Build();
 
