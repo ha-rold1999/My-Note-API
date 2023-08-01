@@ -7,11 +7,11 @@ namespace My_Note_API.Controllers
 {
     public class CodesController : Controller, INotesController<Code>
     {
-        private readonly DbHelper<Code> _dbHelper;
+        private readonly IDbHelper<Code> _dbHelper;
 
-        public CodesController(DatabaseContext context)
-        { 
-            _dbHelper = new DbHelper<Code>(context);
+        public CodesController(IDbHelper<Code> dbHelper)
+        {
+            _dbHelper = dbHelper;
         }
 
         [HttpGet]

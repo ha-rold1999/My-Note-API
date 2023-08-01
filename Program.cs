@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(o => o.AddDefaultPolicy(builder => builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()));
 builder.Services.AddScoped<INotesController<Note>, NotesController>();
 builder.Services.AddScoped<INotesController<Code>, CodesController>();
+builder.Services.AddScoped(typeof(IDbHelper<>) ,typeof(DbHelper<>));
 
 var app = builder.Build();
 
