@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33712.159
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My-Note-API", "My-Note-API.csproj", "{7D2AADBB-5FB8-4026-BB6E-C63494B4C1AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoTests", "..\ToDoTests\ToDoTests.csproj", "{F497FA77-0104-475F-8B9D-C09AD2879337}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7D2AADBB-5FB8-4026-BB6E-C63494B4C1AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D2AADBB-5FB8-4026-BB6E-C63494B4C1AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D2AADBB-5FB8-4026-BB6E-C63494B4C1AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F497FA77-0104-475F-8B9D-C09AD2879337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F497FA77-0104-475F-8B9D-C09AD2879337}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F497FA77-0104-475F-8B9D-C09AD2879337}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F497FA77-0104-475F-8B9D-C09AD2879337}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

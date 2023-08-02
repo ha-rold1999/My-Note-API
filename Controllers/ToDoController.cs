@@ -35,7 +35,7 @@ namespace My_Note_API.Controllers
             try
             {
                 _dbHelper.AddToDo(toDo);
-                return Ok();
+                return Ok(toDo);
             }
             catch (Exception ex) { return BadRequest($"Something went wrong {ex}"); }
 
