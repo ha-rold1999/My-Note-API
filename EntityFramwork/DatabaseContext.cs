@@ -8,5 +8,6 @@ namespace My_Note_API.EntityFramwork
         public DbSet<Note> Notes { get; set; }
         public DbSet<Code> Codes { get; set; }
         public DbSet<ToDo> ToDos { get; set; }
+        public DbSet<Archive_ToDo> Archive_ToDos { get; set; }
     }
 }

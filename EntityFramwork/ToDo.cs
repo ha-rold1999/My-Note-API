@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace My_Note_API.EntityFramwork
 {
-    public class ToDo
+    public class ToDo : IToDo
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

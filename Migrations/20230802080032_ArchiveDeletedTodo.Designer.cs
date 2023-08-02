@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using My_Note_API.EntityFramwork;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace My_Note_API.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230802080032_ArchiveDeletedTodo")]
+    partial class ArchiveDeletedTodo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,27 +36,12 @@ namespace My_Note_API.Migrations
                     b.Property<DateTime>("Archived_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("ToDo_Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ToDo_Goal")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("ToDo_Id")
+                    b.Property<int>("ToDoId")
                         .HasColumnType("integer");
-
-                    b.Property<int>("ToDo_Priority")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ToDo_Status")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Todo_Title")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ToDoId");
 
                     b.ToTable("Archive_ToDos");
                 });
@@ -144,6 +132,17 @@ namespace My_Note_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ToDos");
+                });
+
+            modelBuilder.Entity("My_Note_API.EntityFramwork.Archive_ToDo", b =>
+                {
+                    b.HasOne("My_Note_API.EntityFramwork.ToDo", "ToDo")
+                        .WithMany()
+                        .HasForeignKey("ToDoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ToDo");
                 });
 #pragma warning restore 612, 618
         }
