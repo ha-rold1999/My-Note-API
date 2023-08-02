@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using My_Note_API.EntityFramwork;
+using My_Note_API.EntityFramwork.ToDoEntityFramework;
 
 namespace My_Note_API.Model
 {
     public class ToDoDbHelper<T> : IToDoDbHelper<T> where T : class, IToDo, new()
     {
-        private readonly DatabaseContext _context;
+        private readonly TodoDatabaseContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public ToDoDbHelper(DatabaseContext context)
+        public ToDoDbHelper(TodoDatabaseContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace My_Note_API.EntityFramwork
+namespace My_Note_API.EntityFramwork.ToDoEntityFramework
 {
     public class Archive_ToDo : IArchive_ToDo
     {

@@ -1,4 +1,4 @@
-﻿namespace My_Note_API.EntityFramwork
+﻿namespace My_Note_API.EntityFramwork.ToDoEntityFramework
 {
     public interface IArchive_ToDo
     {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using My_Note_API.EntityFramwork.ToDoEntityFramework;
 
 namespace My_Note_API.EntityFramwork
 {
@@ -7,7 +8,5 @@ namespace My_Note_API.EntityFramwork
         public DatabaseContext(DbContextOptions<DatabaseContext> options): base(options) {}
         public DbSet<Note> Notes { get; set; }
         public DbSet<Code> Codes { get; set; }
-        public DbSet<ToDo> ToDos { get; set; }
-        public DbSet<Archive_ToDo> Archive_ToDos { get; set; }
     }
 }

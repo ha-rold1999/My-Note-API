@@ -1,4 +1,4 @@
-﻿using My_Note_API.EntityFramwork;
+﻿using My_Note_API.EntityFramwork.ToDoEntityFramework;
 
 namespace My_Note_API.Model
 {
