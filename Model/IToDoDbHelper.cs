@@ -2,7 +2,7 @@
 
 namespace My_Note_API.Model
 {
-    public interface IToDoDbHelper<T> where T : class, IToDo, new()
+    public interface IToDoDbHelper<T, T_Archive> where T : class, IToDo, new()
     {
         T AddToDo(T todo);
         T? UpdateTodo(T todo);

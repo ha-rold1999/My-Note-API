@@ -6,9 +6,9 @@ namespace My_Note_API.Controllers
 {
     public class ToDoController : Controller, IToDoController<ToDo>
     {
-        private readonly IToDoDbHelper<ToDo> _dbHelper;
+        private readonly IToDoDbHelper<ToDo, Archive_ToDo> _dbHelper;
 
-        public ToDoController(IToDoDbHelper<ToDo> dbHelper)
+        public ToDoController(IToDoDbHelper<ToDo, Archive_ToDo> dbHelper)
         {
             _dbHelper = dbHelper;
         }
@@ -38,7 +38,21 @@ namespace My_Note_API.Controllers
                 return Ok(toDo);
             }
             catch (Exception ex) { return BadRequest($"Something went wrong {ex}"); }
+        }
 
+        [HttpDelete]
+        [Route("api/[controller]/DeleteToDo/{id}")]
+        public IActionResult DeleteToDo(int id)
+        {
+            try
+            {
+                _dbHelper.DeleteToDo(id);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

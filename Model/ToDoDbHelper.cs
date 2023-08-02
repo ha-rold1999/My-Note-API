@@ -3,15 +3,19 @@ using My_Note_API.EntityFramwork.ToDoEntityFramework;
 
 namespace My_Note_API.Model
 {
-    public class ToDoDbHelper<T> : IToDoDbHelper<T> where T : class, IToDo, new()
+    public class ToDoDbHelper<T, T_Archive> : IToDoDbHelper<T, T_Archive> 
+        where T : class, IToDo, new()
+        where T_Archive : class, IArchive_ToDo, new()
     {
         private readonly TodoDatabaseContext _context;
         private readonly DbSet<T> _dbSet;
+        private readonly DbSet<T_Archive> _dbArchiveSet;
 
         public ToDoDbHelper(TodoDatabaseContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();
+            _dbArchiveSet = _context.Set<T_Archive>();
         }
         public T AddToDo(T todo)
         {
@@ -51,9 +55,26 @@ namespace My_Note_API.Model
 
             if (toDo == null) return null;
 
+            ArchiveToDo(toDo);
+
             _dbSet.Remove(toDo);
             _context.SaveChanges();
             return toDo;
+        }
+
+        private void ArchiveToDo(T todo)
+        {
+            T_Archive archive = new T_Archive()
+            {
+                ToDo_Id = todo.Id,
+                Todo_Title = todo.Title,
+                ToDo_Description = todo.Description,
+                ToDo_Priority = todo.Priority,
+                ToDo_Status = todo.Status,
+                ToDo_Goal = todo.Goal,
+                Archived_Date = DateTime.UtcNow
+            };
+            _dbArchiveSet.Add(archive);
         }
 
         public List<T> GetAllToDo()
