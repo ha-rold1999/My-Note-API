@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using My_Note_API.CustomException;
 using My_Note_API.EntityFramwork.ToDoEntityFramework;
 using My_Note_API.Model;
 
@@ -49,9 +50,9 @@ namespace My_Note_API.Controllers
                 _dbHelper.DeleteToDo(id);
                 return Ok();
             }
-            catch(Exception ex)
+            catch(ToDoNotFoundException ex)
             {
-                return BadRequest(ex.Message);
+                return NotFound();
             }
         }
     }

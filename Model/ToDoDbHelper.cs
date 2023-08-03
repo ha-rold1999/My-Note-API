@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using My_Note_API.CustomException;
 using My_Note_API.EntityFramwork.ToDoEntityFramework;
 
 namespace My_Note_API.Model
@@ -55,7 +56,7 @@ namespace My_Note_API.Model
         public T? DeleteToDo(int toDoId)
         {
             //ToDo: Create an exception when ToDo is not found
-            T? toDo = _dbSet.Find(toDoId) ?? throw new NullReferenceException();
+            T? toDo = _dbSet.Find(toDoId) ?? throw new ToDoNotFoundException();
 
             ArchiveToDo(toDo);
 
