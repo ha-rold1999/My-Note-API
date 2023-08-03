@@ -8,5 +8,6 @@ namespace My_Note_API.EntityFramwork.ToDoEntityFramework
         {}
         DbSet<ToDo> ToDos { get; set; }
         DbSet<Archive_ToDo> Archive_ToDos { get; set; }
+        DbSet<Create_ToDo_Log<ToDo>> Create_ToDo_Logs { get; set; }
     }
 }

@@ -7,13 +7,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace My_Note_API.Model
 {
-    public class ToDoDbHelper<T, T_Archive> : IToDoDbHelper<T, T_Archive> 
+    public class ToDoDbHelper<T, T_Archive, T_Create_Log> : IToDoDbHelper<T, T_Archive> 
         where T : class, IToDo, new()
         where T_Archive : class, IArchive_ToDo, new()
+        where T_Create_Log: class, ICreate_ToDo_Log<T>, new()
     {
         private readonly TodoDatabaseContext _context;
         private readonly DbSet<T> _dbSet;
         private readonly DbSet<T_Archive> _dbArchiveSet;
+        private readonly DbSet<T_Create_Log> _createLog;
         private readonly IMapper _mapper;
 
         public ToDoDbHelper(TodoDatabaseContext context, IMapper mapper)
@@ -21,6 +23,7 @@ namespace My_Note_API.Model
             _context = context;
             _dbSet = _context.Set<T>();
             _dbArchiveSet = _context.Set<T_Archive>();
+            _createLog = _context.Set<T_Create_Log>();
             _mapper = mapper;
         }
         public T AddToDo(T todo)
@@ -29,6 +32,9 @@ namespace My_Note_API.Model
 
             _dbSet.Add(todo);
             _context.SaveChanges();
+
+            LogCreatedToDo(todo);
+
             return todo;
         }
 
@@ -79,6 +85,17 @@ namespace My_Note_API.Model
             bool isValid = Validator.TryValidateObject(todo, new ValidationContext(todo), validationResults, validateAllProperties: true);
 
             if (!isValid) throw new ValidationException();
+        }
+
+        private void LogCreatedToDo(T todo)
+        {
+            T_Create_Log log = new T_Create_Log()
+            {
+                ToDo_Id = todo,
+                Date_Id = DateTime.UtcNow,
+            };
+            _createLog.Add(log);
+            _context.SaveChanges();
         }
     }
 }
