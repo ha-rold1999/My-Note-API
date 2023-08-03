@@ -54,9 +54,8 @@ namespace My_Note_API.Model
 
         public T? DeleteToDo(int toDoId)
         {
-            T? toDo = _dbSet.Find(toDoId);
-
-            if (toDo == null) return null;
+            //ToDo: Create an exception when ToDo is not found
+            T? toDo = _dbSet.Find(toDoId) ?? throw new NullReferenceException();
 
             ArchiveToDo(toDo);
 
