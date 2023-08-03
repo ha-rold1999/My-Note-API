@@ -2,6 +2,7 @@
 using My_Note_API.CustomException;
 using My_Note_API.EntityFramwork.ToDoEntityFramework;
 using My_Note_API.Model;
+using System.ComponentModel.DataAnnotations;
 
 namespace My_Note_API.Controllers
 {
@@ -50,9 +51,28 @@ namespace My_Note_API.Controllers
                 _dbHelper.DeleteToDo(id);
                 return Ok();
             }
-            catch(ToDoNotFoundException ex)
+            catch(ToDoNotFoundException)
             {
                 return NotFound();
+            }
+        }
+
+        [HttpPut]
+        [Route("api/[controller]/UpdateToDo")]
+        public IActionResult UpdateToDo([FromBody] ToDo toDo)
+        {
+            try
+            {
+                _dbHelper.UpdateTodo(toDo);
+                return Ok();
+            }
+            catch (ToDoNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ValidationException)
+            {
+                return BadRequest();
             }
         }
     }

@@ -11,6 +11,7 @@ namespace My_Note_API
                 .ForMember(dest => dest.ToDo_Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.ToDo_Goal, opt => opt.MapFrom(src => src.Goal))
                 .ForMember(dest => dest.Archived_Date, opt => opt.MapFrom(src => DateTime.UtcNow));
+            CreateMap<ToDo, ToDo>();
         }
     }
 }

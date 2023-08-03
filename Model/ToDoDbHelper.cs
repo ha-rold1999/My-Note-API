@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using My_Note_API.CustomException;
 using My_Note_API.EntityFramwork.ToDoEntityFramework;
+using System.ComponentModel.DataAnnotations;
 
 namespace My_Note_API.Model
 {
@@ -23,31 +25,20 @@ namespace My_Note_API.Model
         }
         public T AddToDo(T todo)
         {
-            T newToDo = new T()
-            {
-                Id = todo.Id,
-                Title = todo.Title,
-                Description = todo.Description,
-                Priority = todo.Priority,
-                Status = todo.Status,
-                Goal = todo.Goal
-            };
-            _dbSet.Add(newToDo);
+            isValid(todo);
+
+            _dbSet.Add(todo);
             _context.SaveChanges();
-            return newToDo;
+            return todo;
         }
 
         public T? UpdateTodo(T todo)
         {
-            T? updateTodo = _dbSet.Find(todo.Id);
+            isValid(todo);
 
-            if (updateTodo == null) return null;
+            T updateTodo = isExist(todo.Id);
 
-            updateTodo.Title = todo.Title;
-            updateTodo.Description = todo.Description;
-            updateTodo.Priority = todo.Priority;
-            updateTodo.Status = todo.Status;
-            updateTodo.Goal = todo.Goal;
+            _mapper.Map(todo, updateTodo);
 
             _context.SaveChanges();
             return updateTodo;
@@ -55,8 +46,7 @@ namespace My_Note_API.Model
 
         public T? DeleteToDo(int toDoId)
         {
-            //ToDo: Create an exception when ToDo is not found
-            T? toDo = _dbSet.Find(toDoId) ?? throw new ToDoNotFoundException();
+            T? toDo = isExist(toDoId);
 
             ArchiveToDo(toDo);
 
@@ -76,6 +66,19 @@ namespace My_Note_API.Model
         {
             List<T> toDos = _dbSet.ToList();
             return toDos;
+        }
+
+        private T isExist(int id)
+        { 
+            return _dbSet.Find(id) ?? throw new ToDoNotFoundException();
+        }
+
+        private void isValid(T todo)
+        {
+            var validationResults = new List<ValidationResult>();
+            bool isValid = Validator.TryValidateObject(todo, new ValidationContext(todo), validationResults, validateAllProperties: true);
+
+            if (!isValid) throw new ValidationException();
         }
     }
 }
