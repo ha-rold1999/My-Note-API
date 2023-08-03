@@ -20,6 +20,7 @@ builder.Services.AddScoped<INotesController<Code>, CodesController>();
 builder.Services.AddScoped<IToDoController<ToDo>, ToDoController>();
 builder.Services.AddScoped(typeof(IDbHelper<>) ,typeof(DbHelper<>));
 builder.Services.AddScoped(typeof(IToDoDbHelper<ToDo, Archive_ToDo>), typeof(ToDoDbHelper<ToDo, Archive_ToDo>));
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 

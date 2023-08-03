@@ -11,13 +11,13 @@ namespace My_Note_API.EntityFramwork.ToDoEntityFramework
         [Required]
         public int ToDo_Id { get; set; }
         [Required]
-        public string Todo_Title { get; set; }
+        public string Title { get; set; }
         [Required]
-        public string ToDo_Description { get; set; }
+        public string Description { get; set; }
         [Required]
-        public int ToDo_Priority { get; set; }
+        public int Priority { get; set; }
         [Required]
-        public int ToDo_Status { get; set; }
+        public int Status { get; set; }
         [Required]
         public DateTime ToDo_Goal { get; set; }
         [Required]

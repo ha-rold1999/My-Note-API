@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using My_Note_API.EntityFramwork.ToDoEntityFramework;
 
 namespace My_Note_API.Model
@@ -10,12 +11,14 @@ namespace My_Note_API.Model
         private readonly TodoDatabaseContext _context;
         private readonly DbSet<T> _dbSet;
         private readonly DbSet<T_Archive> _dbArchiveSet;
+        private readonly IMapper _mapper;
 
-        public ToDoDbHelper(TodoDatabaseContext context)
+        public ToDoDbHelper(TodoDatabaseContext context, IMapper mapper)
         {
             _context = context;
             _dbSet = _context.Set<T>();
             _dbArchiveSet = _context.Set<T_Archive>();
+            _mapper = mapper;
         }
         public T AddToDo(T todo)
         {
@@ -62,19 +65,11 @@ namespace My_Note_API.Model
             return toDo;
         }
 
-        private void ArchiveToDo(T todo)
+        private void ArchiveToDo(T toDo)
         {
-            T_Archive archive = new T_Archive()
-            {
-                ToDo_Id = todo.Id,
-                Todo_Title = todo.Title,
-                ToDo_Description = todo.Description,
-                ToDo_Priority = todo.Priority,
-                ToDo_Status = todo.Status,
-                ToDo_Goal = todo.Goal,
-                Archived_Date = DateTime.UtcNow
-            };
-            _dbArchiveSet.Add(archive);
+            var archiveToDo = _mapper.Map<T_Archive>(toDo);
+
+            _dbArchiveSet.Add(archiveToDo);
         }
 
         public List<T> GetAllToDo()
