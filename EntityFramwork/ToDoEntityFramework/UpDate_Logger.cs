@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace My_Note_API.EntityFramwork.ToDoEntityFramework
 {
-    public class UpDate_ToDo_Log<T> : IUpDate_ToDo_Log<T>
+    public class UpDate_Logger<T> : IUpDate_ToDo_Log<T>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required]
         public T ToDo { get; set; }
         [Required]
         public string Log { get; set; }

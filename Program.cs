@@ -21,7 +21,7 @@ builder.Services.AddScoped<IToDoController<ToDo>, ToDoController>();
 builder.Services.AddScoped(typeof(IDbHelper<>) ,typeof(DbHelper<>));
 builder.Services.AddScoped(typeof(IToDoDbHelper<ToDo, Archive_ToDo>), 
     typeof(ToDoDbHelper<ToDo, Archive_ToDo, Create_ToDo_Log<ToDo>, 
-    UpDate_ToDo_Log<My_Note_API.EntityFramwork.ToDoEntityFramework.ToDo>>));
+    UpDate_Logger<My_Note_API.EntityFramwork.ToDoEntityFramework.ToDo>>));
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();

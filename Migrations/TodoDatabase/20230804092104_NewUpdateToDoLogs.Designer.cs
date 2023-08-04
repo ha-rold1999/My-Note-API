@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using My_Note_API.EntityFramwork.ToDoEntityFramework;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace My_Note_API.Migrations.TodoDatabase
 {
     [DbContext(typeof(TodoDatabaseContext))]
-    partial class TodoDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230804092104_NewUpdateToDoLogs")]
+    partial class NewUpdateToDoLogs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,7 +112,7 @@ namespace My_Note_API.Migrations.TodoDatabase
                     b.ToTable("ToDos");
                 });
 
-            modelBuilder.Entity("My_Note_API.EntityFramwork.ToDoEntityFramework.UpDate_Logger<My_Note_API.EntityFramwork.ToDoEntityFramework.ToDo>", b =>
+            modelBuilder.Entity("My_Note_API.EntityFramwork.ToDoEntityFramework.UpDate_Logs<My_Note_API.EntityFramwork.ToDoEntityFramework.ToDo>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -145,7 +148,7 @@ namespace My_Note_API.Migrations.TodoDatabase
                     b.Navigation("ToDo_Id");
                 });
 
-            modelBuilder.Entity("My_Note_API.EntityFramwork.ToDoEntityFramework.UpDate_Logger<My_Note_API.EntityFramwork.ToDoEntityFramework.ToDo>", b =>
+            modelBuilder.Entity("My_Note_API.EntityFramwork.ToDoEntityFramework.UpDate_Logs<My_Note_API.EntityFramwork.ToDoEntityFramework.ToDo>", b =>
                 {
                     b.HasOne("My_Note_API.EntityFramwork.ToDoEntityFramework.ToDo", "ToDo")
                         .WithMany()
