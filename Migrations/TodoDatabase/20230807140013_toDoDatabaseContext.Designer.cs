@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace My_Note_API.Migrations.TodoDatabase
 {
     [DbContext(typeof(TodoDatabaseContext))]
-    [Migration("20230804092245_NewUpdateToDoLogger")]
-    partial class NewUpdateToDoLogger
+    [Migration("20230807140013_toDoDatabaseContext")]
+    partial class toDoDatabaseContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,48 +29,58 @@ namespace My_Note_API.Migrations.TodoDatabase
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Archived_Date")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("archive_date");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<int>("Priority")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("priority");
 
                     b.Property<int>("Status")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("title");
 
                     b.Property<DateTime>("ToDo_Goal")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("todo_goal");
 
                     b.Property<int>("ToDo_Id")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("todo_id");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Archive_ToDos");
+                    b.ToTable("archive_todo");
                 });
 
             modelBuilder.Entity("My_Note_API.EntityFramwork.ToDoEntityFramework.Create_ToDo_Log<My_Note_API.EntityFramwork.ToDoEntityFramework.ToDo>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Date_Id")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("date_id");
 
                     b.Property<int>("ToDo_IdId")
                         .HasColumnType("integer");
@@ -79,62 +89,71 @@ namespace My_Note_API.Migrations.TodoDatabase
 
                     b.HasIndex("ToDo_IdId");
 
-                    b.ToTable("Create_ToDo_Logs");
+                    b.ToTable("create_todo_log");
                 });
 
             modelBuilder.Entity("My_Note_API.EntityFramwork.ToDoEntityFramework.ToDo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<DateTime>("Goal")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("goal");
 
                     b.Property<int>("Priority")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("priority");
 
                     b.Property<int>("Status")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("title");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ToDos");
+                    b.ToTable("todo");
                 });
 
             modelBuilder.Entity("My_Note_API.EntityFramwork.ToDoEntityFramework.UpDate_Logger<My_Note_API.EntityFramwork.ToDoEntityFramework.ToDo>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Log")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("log");
 
                     b.Property<int>("ToDoId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Update_Date")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("update_date");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ToDoId");
 
-                    b.ToTable("UpDate_ToDo_Logs");
+                    b.ToTable("update_logger");
                 });
 
             modelBuilder.Entity("My_Note_API.EntityFramwork.ToDoEntityFramework.Create_ToDo_Log<My_Note_API.EntityFramwork.ToDoEntityFramework.ToDo>", b =>

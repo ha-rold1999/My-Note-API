@@ -25,13 +25,20 @@ builder.Services.AddScoped(typeof(IToDoDbHelper<ToDo, Archive_ToDo>),
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
+using(var scope = app.Services.CreateScope())
+{
+    //var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    //db.Database.Migrate();
+    var todoDb = scope.ServiceProvider.GetRequiredService<TodoDatabaseContext>();
+    todoDb.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 
